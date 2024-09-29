@@ -33,10 +33,11 @@ public class ClientController {
     }
 
     //update client
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     private void updateClient(@PathVariable Long id,@RequestBody Client updatedClient) {
         clientService.updateClient(id,updatedClient);
     }
+
     //delete client
     @GetMapping("/delete/{id}")
     private void deleteClient(@PathVariable Long id) {
