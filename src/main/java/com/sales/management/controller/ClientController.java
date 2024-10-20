@@ -1,8 +1,11 @@
 package com.sales.management.controller;
 
 import com.sales.management.model.Client;
+import com.sales.management.model.ClientResponseDTO;
 import com.sales.management.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +25,13 @@ public class ClientController {
 
     //get specific client
     @GetMapping("/clients/{id}")
-    private Client getClient(@PathVariable int id) {
-        return clientService.getAllClients().get(id);
+    private ResponseEntity<ClientResponseDTO> getClient(@PathVariable long id) {
+            return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
+        /*catch (Exception)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
+
+        }*/
     }
 
     //create new client

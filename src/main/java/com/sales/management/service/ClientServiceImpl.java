@@ -1,9 +1,10 @@
 package com.sales.management.service;
 
 import com.sales.management.model.Client;
+import com.sales.management.model.ClientResponseDTO;
 import com.sales.management.repository.ClientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> getAllClients() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public ClientResponseDTO getClientById(Long id) {
+        Optional<Client> client = clientRepository.findById(id);
+        ClientResponseDTO clientResponseDTO = new ClientResponseDTO();
+        if (client.isPresent()) {
+            clientResponseDTO = new ClientResponseDTO();
+            clientResponseDTO.setClient(client.get());
+        } else {
+            throw  new EntityNotFoundException();
+        }
+        return clientResponseDTO;
     }
 
     @Override
